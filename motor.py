@@ -1,32 +1,34 @@
-from RPi import GPIO
+import RPi.GPIO as GPIO
 
 
 class Motor:
     def __init__(self, plus, minus, enable):
-        self.plus = plus
-        self.minus = minus
-        # A motozero-n levo chip hasznal egy harmadik pint,
-        # ami engedelyezi egy adott motor vezerleset
-        self.enable = enable
+        GPIO.setup(plus, GPIO.OUT)
+        GPIO.setup(minus, GPIO.OUT)
+        GPIO.setup(enable, GPIO.OUT)
 
-        GPIO.setup(self.plus, GPIO.OUT)
-        GPIO.setup(self.minus, GPIO.OUT)
-        GPIO.setup(self.enable, GPIO.OUT)
+        self.plus = GPIO.PWM(plus, 100)
+        self.minus = GPIO.PWM(minus, 100)
+        self.dutycycle = 0
 
     def stop(self):
-        GPIO.output(self.plus, GPIO.LOW)
-        GPIO.output(self.minus, GPIO.LOW)
+        self.plus.stop()
 
-    def on(self):
+    def on(self, dutycycle):
+        self.dutycycle = dutycycle
+        self.plus.start(0)
+        self.minus.start(0)
+
         GPIO.output(self.enable, GPIO.HIGH)
 
     def off(self):
+        self.dutycycle = 0
         GPIO.output(self.enable, GPIO.LOW)
 
     def forward(self):
-        GPIO.output(self.plus, GPIO.HIGH)
-        GPIO.output(self.minus, GPIO.LOW)
+        self.minus.ChangeDutyCycle(0)
+        self.plus.ChangeDutyCycle(self.dutycycle)
 
     def backward(self):
-        GPIO.output(self.plus, GPIO.LOW)
-        GPIO.output(self.minus, GPIO.HIGH)
+        self.plus.ChangeDutyCycle(0)
+        self.minus.ChangeDutyCycle(self.dutycycle)
