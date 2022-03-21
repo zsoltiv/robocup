@@ -22,6 +22,6 @@ def load_signs(directory):
 def get_sign(picture, signs):
     closest = 1.0
     for sign in signs:
-        
+        match = cv2.matchShapes(picture, sign, )
 
 load_signs('signs')
