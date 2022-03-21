@@ -27,7 +27,7 @@ with ControllerResource() as joystick:
 			dc.motor_controlling()
 		if joystick.releases.dup:
 			print("Stop")
-			dc.motor_off()
+			dc.motors_off()
 
 
 		if joystick.presses.ddown:
@@ -36,7 +36,7 @@ with ControllerResource() as joystick:
 			dc.motor_controlling()
 		if joystick.releases.ddown:
 			print("Stop")
-			dc.motor_off()
+			dc.motors_off()
 
 
 		if joystick.presses.dright:
@@ -45,7 +45,7 @@ with ControllerResource() as joystick:
 			dc.motor_controlling()
 		if joystick.releases.dright:
 			print("Stop")
-			dc.motor_off()
+			dc.motors_off()
 
 
 		if joystick.presses.dleft:
@@ -54,4 +54,4 @@ with ControllerResource() as joystick:
 			dc.motor_controlling()
 		if joystick.releases.dleft:
 			print("Stop")
-			dc.motor_off()
+			dc.motors_off()
