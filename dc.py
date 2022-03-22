@@ -1,11 +1,5 @@
 import RPi.GPIO as GPIO
 
-def motors_off():
-	GPIO.output(enable1, GPIO.LOW)
-	GPIO.output(enable2, GPIO.LOW)
-	GPIO.output(enable3, GPIO.LOW)
-	GPIO.output(enable4, GPIO.LOW)
-
 def motors_basic_setup():
 	GPIO.setup(enable1, GPIO.OUT)
 	GPIO.setup(enable2, GPIO.OUT)
@@ -23,6 +17,12 @@ def motors_basic_setup():
 
 	GPIO.setup(positive4, GPIO.OUT)
 	GPIO.setup(negative4, GPIO.OUT)
+
+def motors_off():
+    enable1_pwm.ChangeDutyCycle(0)
+    enable2_pwm.ChangeDutyCycle(0)
+    enable3_pwm.ChangeDutyCycle(0)
+    enable4_pwm.ChangeDutyCycle(0)
 
 def forward():
 	GPIO.output(positive1, GPIO.HIGH)
@@ -104,13 +104,9 @@ enable4 = 25
 positive4 = 13
 negative4 = 18
 
-
-motors_basic_setup()
-motors_off()
-
-
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
+motors_basic_setup()
 
 enable1_pwm = GPIO.PWM(enable1, 1000)
 enable2_pwm = GPIO.PWM(enable2, 2000)
@@ -121,4 +117,4 @@ enable1_pwm.start(0)
 enable2_pwm.start(0)
 enable3_pwm.start(0)
 enable4_pwm.start(0)
-speed = 50
+speed = 100
