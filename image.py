@@ -1,7 +1,4 @@
 import cv2
-from os import listdir
-from os.path import join
-import numpy as np
 
 
 def contours(gray):
@@ -11,10 +8,13 @@ def contours(gray):
     return contours
 
 
-def load_signs(directory):
+def load_signs(file_list):
+    """
+    ugyanakkora a signs halmaz mint a file_list
+    """
     signs = []
-    for file_ in listdir(directory):
-        img = cv2.imread(join(directory, file_))
+    for file_ in file_list:
+        img = cv2.imread(file_)
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         img = contours(img)
         signs.append(img)
@@ -24,12 +24,14 @@ def load_signs(directory):
 
 def get_sign(picture, signs):
     closest = 1.0
-    for sign in signs:
+    closest_index = None
+    for index, sign in enumerate(signs):
         match = cv2.matchShapes(picture, sign, )
         if match < closest:
             closest = match
+            closest_index = index
 
-    return closest
+    # indexet adjuk vissza, hogy utana a fajllistabol
+    # lekerhessuk melyik kephez all a legkozelebb
+    return closest_index
 
-
-signs = load_signs('signs')
