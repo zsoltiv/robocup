@@ -1,6 +1,8 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 from cv2 import cvtColor, COLOR_RGB2GRAY, imshow, waitKey
+from image import load_signs, get_sign, contours
+from utils import files
 
 
 class Camera:
@@ -23,7 +25,6 @@ class Camera:
         # akkor megkapjuk a konturokat amiket osszehasonlithatunk
         bgr = PiRGBArray(self.picamera, size=(1024, 768))
         self.picamera.capture(bgr, 'bgr')
-        print(type(bgr))
         return cvtColor(bgr.array, COLOR_RGB2GRAY)
 
 
@@ -31,7 +32,10 @@ camera = Camera()
 # tesztelesre jo az a preview
 camera.picamera.start_preview()
 # tenyleges RGB-t ad
-rgb = camera.picture()
-camera.picamera.stop_preview()
-imshow('buzibaro', rgb)
-waitKey(0)
+rgb = contours(camera.picture())
+#camera.picamera.stop_preview()
+#imshow('buzibaro', rgb)
+#waitKey(0)
+imgs = files('signs')
+signs = load_signs(imgs)
+print(imgs[get_sign(rgb, signs)])

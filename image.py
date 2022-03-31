@@ -1,9 +1,8 @@
 import cv2
 
-
 def contours(gray):
     _, threshold = cv2.threshold(gray, 127, 255, 0)
-    contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     return contours
 
@@ -26,7 +25,7 @@ def get_sign(picture, signs):
     closest = 1.0
     closest_index = None
     for index, sign in enumerate(signs):
-        match = cv2.matchShapes(picture, sign, )
+        match = cv2.matchShapes(picture, sign, 1, 0)
         if match < closest:
             closest = match
             closest_index = index
