@@ -30,10 +30,12 @@ class Camera:
 
 camera = Camera()
 # tesztelesre jo az a preview
-camera.picamera.start_preview()
 # tenyleges RGB-t ad
-rgb = contours(camera.picture())
-#camera.picamera.stop_preview()
+rgb = camera.picture()
+imshow('bulibaro', rgb)
+waitKey(0)
+imshow('bulibaro', contours(rgb))
+waitKey(0)
 #imshow('buzibaro', rgb)
 #waitKey(0)
 imgs = files('signs')

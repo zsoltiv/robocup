@@ -1,7 +1,8 @@
 import cv2
 
+
 def contours(gray):
-    _, threshold = cv2.threshold(gray, 127, 255, 0)
+    _, threshold = cv2.threshold(gray, 50, 255, 0)
     contours, hierarchy, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     return contours
@@ -34,3 +35,7 @@ def get_sign(picture, signs):
     # lekerhessuk melyik kephez all a legkozelebb
     return closest_index
 
+import utils
+signs = utils.files('signs')
+imgs = load_signs(signs)
+print(signs[get_sign(imgs[0], imgs)], signs)
