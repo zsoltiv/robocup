@@ -7,8 +7,8 @@ def display(img):
     cv2.waitKey(0)
 
 def contours(gray):
+    # draga mulatsag, mert csinal egy masolatot az egesz kepbol, ami nagy felbontasnal bajos lehet
     median_value = int(np.median(np.unique(np.copy(gray))))
-    print(median_value)
     _, threshold = cv2.threshold(gray, median_value, 255, 0)
     display(threshold)
     contours_tup, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -44,9 +44,10 @@ def get_sign(picture, signs):
     # lekerhessuk melyik kephez all a legkozelebb
     return closest_index
 
+# ideiglenes teszt kod
 import utils
 signs = utils.files('signs')
 print(signs)
 imgs = load_signs(signs)
-test = load_sign('test.jpg')
+test = load_sign('test_toxic.png')
 print(signs[get_sign(test, imgs)], signs)
