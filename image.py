@@ -6,19 +6,26 @@ def display(img):
     cv2.imshow('lol', img)
     cv2.waitKey(0)
 
+
 def contours(gray):
-    # draga mulatsag, mert csinal egy masolatot az egesz kepbol, ami nagy felbontasnal bajos lehet
+    # draga mulatsag, mert csinal egy masolatot az egesz kepbol,
+    # ami nagy felbontasnal bajos lehet
     median_value = int(np.median(np.unique(np.copy(gray))))
     _, threshold = cv2.threshold(gray, median_value, 255, 0)
-    display(threshold)
-    contours_tup, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours_tup, hierarchy = cv2.findContours(
+            threshold,
+            cv2.RETR_TREE,
+            cv2.CHAIN_APPROX_SIMPLE)
 
-    # 4.5.4 ota valamiert tuple-t ad vissza alapbol, szoval csinalunk belole listat
-    return contours_tup[0]
+    # 4.5.4 ota valamiert tuple-t ad vissza alapbol,
+    # szoval csinalunk belole listat
+    return threshold
+
 
 def load_sign(file_):
-        img = cv2.imread(file_)
-        return contours(cv2.cvtColor(img, cv2.COLOR_RGB2GRAY))
+    img = cv2.imread(file_)
+    return contours(cv2.cvtColor(img, cv2.COLOR_RGB2GRAY))
+
 
 def load_signs(file_list):
     """
@@ -45,9 +52,13 @@ def get_sign(picture, signs):
     return closest_index
 
 # ideiglenes teszt kod
-import utils
-signs = utils.files('signs')
-print(signs)
-imgs = load_signs(signs)
-test = load_sign('test_toxic.png')
-print(signs[get_sign(test, imgs)], signs)
+# csak akkor hivodik meg ha ezt a filet futtatjuk
+
+if __name__ == '__main__':
+    import utils
+    sign_files = utils.files('signs')
+    test_files = utils.files('tests')
+    imgs = load_signs(sign_files)
+    tests = load_signs(test_files)
+    for i, test in enumerate(tests):
+        print(f'{test_files[i]}: {sign_files[get_sign(test, imgs)]}')
