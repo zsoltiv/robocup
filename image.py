@@ -39,11 +39,12 @@ def load_signs(file_list):
 
 
 def get_sign(picture, signs):
-    closest = 0.0
+    closest = 1.0
     closest_index = None
     for index, sign in enumerate(signs):
         match = cv2.matchShapes(picture, sign, 1, 0)
-        if match > closest:
+        print(index, match)
+        if match < closest:
             closest = match
             closest_index = index
 
@@ -61,4 +62,5 @@ if __name__ == '__main__':
     imgs = load_signs(sign_files)
     tests = load_signs(test_files)
     for i, test in enumerate(tests):
-        print(f'{test_files[i]}: {sign_files[get_sign(test, imgs)]}')
+        index = get_sign(test, imgs)
+        print(f'{test_files[i]}: {index} {sign_files[index]}')
