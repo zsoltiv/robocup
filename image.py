@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from skimage.metrics import structural_similarity as ssim
 
 
 def display(img):
@@ -16,7 +17,6 @@ def contours(gray):
     # ami nagy felbontasnal bajos lehet
     median_value = int(np.median(np.unique(np.copy(gray))))
     _, threshold = cv2.threshold(gray, median_value, 255, 0)
-    threshold = cv2.resize(threshold, (1280, 720))
     display(threshold)
     contours_tup, hierarchy = cv2.findContours(
             threshold,
@@ -43,14 +43,17 @@ def load_signs(file_list):
 
 
 def get_sign(picture, signs):
-    closest = 1.0
+    closest = 0.0
     closest_index = None
     for index, sign in enumerate(signs):
-        match = cv2.matchShapes(picture, sign, 1, 0)
-        print(index, match_percent(match))
-        if match < closest:
-            closest = match
-            closest_index = index
+        try:
+            match = ssim(picture, sign)
+            print(index, match)
+            if match > closest:
+                closest = match
+                closest_index = index
+        except Exception:
+            pass
 
     # indexet adjuk vissza, hogy utana a fajllistabol
     # lekerhessuk melyik kephez all a legkozelebb
@@ -59,3 +62,9 @@ def get_sign(picture, signs):
 
 # ideiglenes teszt kod
 # csak akkor hivodik meg ha ezt a filet futtatjuk
+if __name__ == '__main__':
+    import utils
+    signs = utils.files('signs')
+    imgs = load_sign('signs/simple_toxic.png')
+    test = load_sign('tests/test_toxic.png')
+    print(ssim(imgs, test))
