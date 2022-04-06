@@ -8,6 +8,19 @@ def display(img):
     cv2.waitKey(0)
 
 
+def resize_to_same_size(img1, img2):
+    w1, h1 = img1.shape[:2]
+    w2, h2 = img2.shape[:2]
+
+    w = max([w1, w2])
+    h = max([h1, h2])
+
+    img1 = cv2.resize(img1, (w, h))
+    img2 = cv2.resize(img2, (w, h))
+
+    return (img1, img2)
+
+
 def match_percent(match):
     return (1.0 - match) * 100
 
@@ -17,7 +30,7 @@ def contours(gray):
     # ami nagy felbontasnal bajos lehet
     median_value = int(np.median(np.unique(np.copy(gray))))
     _, threshold = cv2.threshold(gray, median_value, 255, 0)
-    display(threshold)
+    #display(threshold)
     contours_tup, hierarchy = cv2.findContours(
             threshold,
             cv2.RETR_TREE,
@@ -47,7 +60,10 @@ def get_sign(picture, signs):
     closest_index = None
     for index, sign in enumerate(signs):
         try:
-            match = ssim(picture, sign)
+            r_picture, r_sign = resize_to_same_size(picture, sign)
+            display(r_picture)
+            display(r_sign)
+            match = ssim(r_picture, r_sign)
             print(index, match)
             if match > closest:
                 closest = match
@@ -65,6 +81,9 @@ def get_sign(picture, signs):
 if __name__ == '__main__':
     import utils
     signs = utils.files('signs')
-    imgs = load_sign('signs/simple_toxic.png')
-    test = load_sign('tests/test_toxic.png')
-    print(ssim(imgs, test))
+    imgs = load_sign('fire1.jpg')
+    test = load_sign('fire2.jpg')
+    r_test, r_imgs = resize_to_same_size(test, imgs)
+    display(r_test)
+    display(r_imgs)
+    print(ssim(r_test, r_imgs))
