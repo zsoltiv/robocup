@@ -1,22 +1,22 @@
 import RPi.GPIO as GPIO
 
 def motors_basic_setup():
-	GPIO.setup(enable1, GPIO.OUT)
-	GPIO.setup(enable2, GPIO.OUT)
-	GPIO.setup(enable3, GPIO.OUT)
-	GPIO.setup(enable4, GPIO.OUT)
+    GPIO.setup(enable1, GPIO.OUT)
+    GPIO.setup(enable2, GPIO.OUT)
+    GPIO.setup(enable3, GPIO.OUT)
+    GPIO.setup(enable4, GPIO.OUT)
 
-	GPIO.setup(positive1, GPIO.OUT)
-	GPIO.setup(negative1, GPIO.OUT)
+    GPIO.setup(positive1, GPIO.OUT)
+    GPIO.setup(negative1, GPIO.OUT)
 
-	GPIO.setup(positive2, GPIO.OUT)
-	GPIO.setup(negative2, GPIO.OUT)
+    GPIO.setup(positive2, GPIO.OUT)
+    GPIO.setup(negative2, GPIO.OUT)
 
-	GPIO.setup(positive3, GPIO.OUT)
-	GPIO.setup(negative3, GPIO.OUT)
+    GPIO.setup(positive3, GPIO.OUT)
+    GPIO.setup(negative3, GPIO.OUT)
 
-	GPIO.setup(positive4, GPIO.OUT)
-	GPIO.setup(negative4, GPIO.OUT)
+    GPIO.setup(positive4, GPIO.OUT)
+    GPIO.setup(negative4, GPIO.OUT)
 
 def motors_off():
     enable1_pwm.ChangeDutyCycle(0)
@@ -25,62 +25,62 @@ def motors_off():
     enable4_pwm.ChangeDutyCycle(0)
 
 def forward():
-	GPIO.output(positive1, GPIO.HIGH)
-	GPIO.output(negative1, GPIO.LOW)
+    GPIO.output(positive1, GPIO.HIGH)
+    GPIO.output(negative1, GPIO.LOW)
 
-	GPIO.output(positive2, GPIO.HIGH)
-	GPIO.output(negative2, GPIO.LOW)
+    GPIO.output(positive2, GPIO.HIGH)
+    GPIO.output(negative2, GPIO.LOW)
 
-	GPIO.output(positive3, GPIO.HIGH)
-	GPIO.output(negative3, GPIO.LOW)
+    GPIO.output(positive3, GPIO.HIGH)
+    GPIO.output(negative3, GPIO.LOW)
 
-	GPIO.output(positive4, GPIO.HIGH)
-	GPIO.output(negative4, GPIO.LOW)
+    GPIO.output(positive4, GPIO.HIGH)
+    GPIO.output(negative4, GPIO.LOW)
 
 def backward():
-	GPIO.output(positive1, GPIO.LOW)
-	GPIO.output(negative1, GPIO.HIGH)
+    GPIO.output(positive1, GPIO.LOW)
+    GPIO.output(negative1, GPIO.HIGH)
 
-	GPIO.output(positive2, GPIO.LOW)
-	GPIO.output(negative2, GPIO.HIGH)
+    GPIO.output(positive2, GPIO.LOW)
+    GPIO.output(negative2, GPIO.HIGH)
 
-	GPIO.output(positive3, GPIO.LOW)
-	GPIO.output(negative3, GPIO.HIGH)
+    GPIO.output(positive3, GPIO.LOW)
+    GPIO.output(negative3, GPIO.HIGH)
 
-	GPIO.output(positive4, GPIO.LOW)
-	GPIO.output(negative4, GPIO.HIGH)
+    GPIO.output(positive4, GPIO.LOW)
+    GPIO.output(negative4, GPIO.HIGH)
 
 def right():
-	GPIO.output(positive1, GPIO.HIGH)
-	GPIO.output(negative1, GPIO.LOW)
+    GPIO.output(positive1, GPIO.HIGH)
+    GPIO.output(negative1, GPIO.LOW)
 
-	GPIO.output(positive2, GPIO.LOW)
-	GPIO.output(negative2, GPIO.HIGH)
+    GPIO.output(positive2, GPIO.LOW)
+    GPIO.output(negative2, GPIO.HIGH)
 
-	GPIO.output(positive3, GPIO.LOW)
-	GPIO.output(negative3, GPIO.HIGH)
+    GPIO.output(positive3, GPIO.LOW)
+    GPIO.output(negative3, GPIO.HIGH)
 
-	GPIO.output(positive4, GPIO.HIGH)
-	GPIO.output(negative4, GPIO.LOW)
+    GPIO.output(positive4, GPIO.HIGH)
+    GPIO.output(negative4, GPIO.LOW)
 
 def left():
-	GPIO.output(positive1, GPIO.LOW)
-	GPIO.output(negative1, GPIO.HIGH)
+    GPIO.output(positive1, GPIO.LOW)
+    GPIO.output(negative1, GPIO.HIGH)
 
-	GPIO.output(positive2, GPIO.HIGH)
-	GPIO.output(negative2, GPIO.LOW)
+    GPIO.output(positive2, GPIO.HIGH)
+    GPIO.output(negative2, GPIO.LOW)
 
-	GPIO.output(positive3, GPIO.HIGH)
-	GPIO.output(negative3, GPIO.LOW)
+    GPIO.output(positive3, GPIO.HIGH)
+    GPIO.output(negative3, GPIO.LOW)
 
-	GPIO.output(positive4, GPIO.LOW)
-	GPIO.output(negative4, GPIO.HIGH)
+    GPIO.output(positive4, GPIO.LOW)
+    GPIO.output(negative4, GPIO.HIGH)
 
 def motor_controlling():
-	enable1_pwm.ChangeDutyCycle(speed)
-	enable2_pwm.ChangeDutyCycle(speed)
-	enable3_pwm.ChangeDutyCycle(speed)
-	enable4_pwm.ChangeDutyCycle(speed)
+    enable1_pwm.ChangeDutyCycle(speed)
+    enable2_pwm.ChangeDutyCycle(speed)
+    enable3_pwm.ChangeDutyCycle(speed)
+    enable4_pwm.ChangeDutyCycle(speed)
 
 
 #Pre-allocated GPIO pins:
