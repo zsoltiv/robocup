@@ -25,6 +25,15 @@ def match_percent(match):
     return (1.0 - match) * 100
 
 
+def color_similarity(img1, img2):
+    # histogram magia
+    hist1 = cv2.calcHist([img1], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
+    hist2 = cv2.calcHist([img2], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
+    hist1 = cv2.normalize(hist1, hist1).flatten()
+    hist2 = cv2.normalize(hist2, hist2).flatten()
+    return cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
+
+
 def contours(gray):
     # draga mulatsag, mert csinal egy masolatot az egesz kepbol,
     # ami nagy felbontasnal bajos lehet
@@ -79,11 +88,10 @@ def get_sign(picture, signs):
 # ideiglenes teszt kod
 # csak akkor hivodik meg ha ezt a filet futtatjuk
 if __name__ == '__main__':
-    import utils
-    signs = utils.files('signs')
-    imgs = load_sign('fire1.jpg')
-    test = load_sign('fire2.jpg')
+    imgs = cv2.imread('fire1.jpg')
+    test = cv2.imread('fire2.jpg')
     r_test, r_imgs = resize_to_same_size(test, imgs)
     display(r_test)
     display(r_imgs)
-    print(ssim(r_test, r_imgs))
+    print(color_similarity(r_test, r_imgs))
+    #print(ssim(r_test, r_imgs))
