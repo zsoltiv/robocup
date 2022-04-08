@@ -22,44 +22,87 @@ with ControllerResource() as joystick:
         right_x, right_y = joystick['rx', 'ry']
 
 
-        if left_x < -0.5 and servo.servo_state > 0:
-            servo.servo_state = servo.servo_state - 1
-            print(servo.servo_state)
-            servo.rotation()
+        #Servo kar alapja:
+        if right_x < -0.75 and servo.alap > 0:
+            servo.alap = servo.alap - 0.5
+            servo.alap_rotation()
             
-        if left_x > 0.5 and servo.servo_state < 180:
-            servo.servo_state = servo.servo_state + 1
-            print(servo.servo_state)
-            servo.rotation()
-        
-        """
+        if right_x > 0.75 and servo.alap < 180:
+            servo.alap = servo.alap + 0.5
+            servo.alap_rotation()
+
+
+        #Servo kar rész0:
+        if right_y < -0.75 and servo.resz0 > 0:
+            servo.resz0 = servo.resz0 - 0.5
+            servo.resz0_rotation()
+            
+        if right_y > 0.75 and servo.resz0 < 180:
+            servo.resz0 = servo.resz0 + 0.5
+            servo.resz0_rotation()
+            
+            
+        #Servo kar rész1:
+        if left_y < -0.75 and servo.resz1 > 0:
+            servo.resz1 = servo.resz1 - 0.5
+            servo.resz1_rotation()
+            
+        if left_y > 0.75 and servo.resz1 < 180:
+            servo.resz1 = servo.resz1 + 0.5
+            servo.resz1_rotation()
+            
+            
+        #Servo kar rész2:
+        if left_x < -0.75 and servo.resz2 > 0:
+            servo.resz2 = servo.resz2 - 0.5
+            servo.resz2_rotation()
+            
+        if left_x > 0.75 and servo.resz2 < 180:
+            servo.resz2 = servo.resz2 + 0.5
+            servo.resz2_rotation()
+
+
+        #Servo kar csuklója:
         right_bumper = joystick['r1']
         left_bumper = joystick['l1']
+        
+        if right_bumper is not None and servo.csuklo > 0:
+            servo.csuklo = servo.csuklo - 0.5
+            servo.csuklo_rotation()
+            
+        if left_bumper is not None and servo.csuklo < 180:
+            servo.csuklo = servo.csuklo + 0.5
+            servo.csuklo_rotation()
+        
+        
+        #Servo kar manipulátora:
+        right_trigger = joystick['r2']
+        left_trigger = joystick['l2']
 
-        if left_bumper is not None and servo.servo_state > 0:
-            servo.servo_state = servo.servo_state - 1
-            print(servo.servo_state)
-            servo.rotation()
+        if right_trigger is not None and servo.manipulator > 0:
+            servo.manipulator = servo.manipulator - 0.5
+            servo.manipulator_rotation()
 
-        if right_bumper is not None and servo.servo_state < 180:
-            servo.servo_state = servo.servo_state + 1
-            print(servo.servo_state)
-            servo.rotation()
-        """
-
+        if left_trigger is not None and servo.manipulator < 180:
+            servo.manipulator = servo.manipulator + 0.5
+            servo.manipulator_rotation()
+            
+            
+        #Camera            
+        if joystick.presses.select:
+            camera.picture()
+            print(len(camera.images))
+            if len(camera.images) == 2:
+                print(f'Ennyire hasonlóak a képek: {ssim(camera.images[0], camera.images[1])}')
+        
+        
         #DC motor controlling:
-        if joystick.presses.circle:
+        if joystick.presses.square:
             print("Speed is set to 100")
             dc.speed = 100
-        if joystick.presses.cross:
-            print("Speed is set to 75")
-            dc.speed = 75
-        if joystick.presses.square:
+        if joystick.presses.circle:
             print("Speed is set to 50")
             dc.speed = 50
-        if joystick.presses.triangle:
-            print("Speed is set to 25")
-            dc.speed = 25
 
 
         if joystick.presses.dup:
@@ -69,13 +112,6 @@ with ControllerResource() as joystick:
         if joystick.releases.dup:
             print("Stop")
             dc.motors_off()
-
-        if joystick.presses.select:
-            camera.picture()
-            print(len(camera.images))
-            if len(camera.images) == 2:
-                print(f'ennyire hasonloak a kepek: {ssim(camera.images[0], camera.images[1])}')
-
 
         if joystick.presses.ddown:
             print("Backward")
