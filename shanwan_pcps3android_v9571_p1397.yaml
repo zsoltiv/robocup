@@ -1,0 +1,48 @@
+axes:
+  dx:
+    code: 16
+    invert: false
+    max_value: 1
+    min_value: -1
+  dy:
+    code: 17
+    invert: false
+    max_value: 1
+    min_value: -1
+  lx:
+    code: 0
+    invert: false
+    max_value: 255
+    min_value: 0
+  ly:
+    code: 1
+    invert: false
+    max_value: 255
+    min_value: 0
+  rx:
+    code: 2
+    invert: false
+    max_value: 255
+    min_value: 0
+  ry:
+    code: 5
+    invert: false
+    max_value: 255
+    min_value: 0
+buttons:
+  circle: 305
+  cross: 306
+  home: 316
+  l1: 308
+  l2: 310
+  ls: 314
+  r1: 309
+  r2: 311
+  rs: 315
+  select: 312
+  square: 307
+  start: 313
+  triangle: 304
+name: ShanWan PC/PS3/Android
+product: 1397
+vendor: 9571
