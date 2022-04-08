@@ -40,7 +40,7 @@ def contours(gray):
     median_value = int(np.median(np.unique(np.copy(gray))))
     _, threshold = cv2.threshold(gray, median_value, 255, 0)
     #display(threshold)
-    contours_tup, hierarchy = cv2.findContours(
+    contours_tup = cv2.findContours(
             threshold,
             cv2.RETR_TREE,
             cv2.CHAIN_APPROX_SIMPLE)

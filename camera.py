@@ -1,8 +1,7 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-from cv2 import cvtColor, COLOR_RGB2GRAY, imshow, waitKey
-from image import load_signs, get_sign, contours
-from utils import files
+from cv2 import cvtColor, COLOR_BGR2GRAY, imshow, waitKey
+from image import contours
 
 
 class Camera:
@@ -12,32 +11,34 @@ class Camera:
 
     def __init__(self):
         self.picamera = PiCamera()
-        self.picamera.resolution = (1024, 768)
+        self._resolution = (1024, 768)
+        self.picamera.resolution = self._resolution
         self.picamera.color_effects = (128, 128)
+        self.images = []
 
     def picture(self):
-        # cvtColor() es COLOR_BGR2GRAY a cv2-ben van
-        #
-        # COLOR_RGB2GRAY helyett COLOR_BGR2GRAY, mert a PiRGBArray() fuggveny
-        # forditott RGB-t ad (Blue, Green, Red)
-        #
-        # ennek az eredmenyet ha parameterkent odaadjuk a contours()-nak
-        # akkor megkapjuk a konturokat amiket osszehasonlithatunk
-        bgr = PiRGBArray(self.picamera, size=(1024, 768))
+        bgr = PiRGBArray(self.picamera, size=self._resolution)
         self.picamera.capture(bgr, 'bgr')
-        return cvtColor(bgr.array, COLOR_RGB2GRAY)
+        cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
+        #return cvtColor(bgr.array, COLOR_RGB2GRAY)
+        if len(self.images) >= 2:
+            self.images = [cnt]
+        else:
+            self.images.append(cnt)
 
 
-camera = Camera()
-# tesztelesre jo az a preview
-# tenyleges RGB-t ad
-rgb = camera.picture()
-imshow('bulibaro', rgb)
-waitKey(0)
-imshow('bulibaro', contours(rgb))
-waitKey(0)
-#imshow('buzibaro', rgb)
-#waitKey(0)
-imgs = files('signs')
-signs = load_signs(imgs)
-print(imgs[get_sign(rgb, signs)])
+if __name__ == '__main__':
+    from utils import files
+    camera = Camera()
+    # tesztelesre jo az a preview
+    # tenyleges RGB-t ad
+    rgb = camera.picture()
+    imshow('bulibaro', rgb)
+    waitKey(0)
+    imshow('bulibaro', contours(rgb))
+    waitKey(0)
+    #imshow('buzibaro', rgb)
+    #waitKey(0)
+    imgs = files('signs')
+    signs = load_signs(imgs)
+    print(imgs[get_sign(rgb, signs)])

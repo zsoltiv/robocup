@@ -1,10 +1,19 @@
 import dc
 import servo
 from approxeng.input.selectbinder import ControllerResource
+# kepfeldolgozas
+from skimage.measure import compare_ssim as ssim
+
+# custom modulok
+from camera import Camera
+from image import color_similarity
 
 with ControllerResource() as joystick:
     print("Found a joystick and connected")
     servo.start_position()
+    # kamera
+    camera = Camera()
+
 
     while joystick.connected:
         joystick.check_presses()
@@ -60,6 +69,12 @@ with ControllerResource() as joystick:
         if joystick.releases.dup:
             print("Stop")
             dc.motors_off()
+
+        if joystick.presses.select:
+            camera.picture()
+            print(len(camera.images))
+            if len(camera.images) == 2:
+                print(f'ennyire hasonloak a kepek: {ssim(camera.images[0], camera.images[1])}')
 
 
         if joystick.presses.ddown:
