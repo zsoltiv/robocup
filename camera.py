@@ -1,7 +1,7 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 from cv2 import cvtColor, COLOR_BGR2GRAY, imshow, waitKey
-from image import contours
+from image import contours, histogram
 
 
 class Camera:
@@ -19,12 +19,12 @@ class Camera:
     def picture(self):
         bgr = PiRGBArray(self.picamera, size=self._resolution)
         self.picamera.capture(bgr, 'bgr')
+        hist = histogram(bgr.array)
         cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
-        #return cvtColor(bgr.array, COLOR_RGB2GRAY)
         if len(self.images) >= 2:
-            self.images = [cnt]
+            self.images = [(cnt, hist)]
         else:
-            self.images.append(cnt)
+            self.images.append((cnt, hist))
 
 
 if __name__ == '__main__':

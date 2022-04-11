@@ -93,7 +93,13 @@ with ControllerResource() as joystick:
             camera.picture()
             print(len(camera.images))
             if len(camera.images) == 2:
-                print(f'Ennyire hasonlóak a képek: {ssim(camera.images[0], camera.images[1])}')
+                match = ssim(camera.images[0][0], camera.images[1][0])
+                print(f'Ennyire hasonlóak a képek: {match}')
+                if match >= 90:
+                    print('egyeznek')
+                else:
+                    print('nem egyeznek')
+
         
         
         #DC motor controlling:

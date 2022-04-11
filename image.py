@@ -26,6 +26,11 @@ def match_percent(match):
     return (1.0 - match) * 100
 
 
+def histogram(img):
+    hist = cv2.calcHist([img], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
+    return cv2.normalize(hist, None).flatten()
+
+
 def color_similarity(img1, img2):
     # histogram magia
     hist1 = cv2.calcHist([img1], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
