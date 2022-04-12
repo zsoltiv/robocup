@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
-#from skimage.measure import compare_ssim as ssim
-from skimage.metrics import structural_similarity as ssim
+from skimage.measure import compare_ssim as ssim
+#from skimage.metrics import structural_similarity as ssim
 
 
 def display(img):
@@ -39,7 +39,7 @@ def color_similarity(img1, img2):
     #hist2 = cv2.normalize(hist2, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F).flatten()
     hist1 = cv2.normalize(hist1, None).flatten()
     hist2 = cv2.normalize(hist2, None).flatten()
-    return cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA)
+    return match_percent(cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA))
 
 
 def contours(gray):

@@ -100,6 +100,11 @@ with ControllerResource() as joystick:
                     print('egyeznek')
                 else:
                     print('nem egyeznek')
+                color_match = color_similarity(camera.images[0][1], camera.images[1][1])
+                if color_match >= 90:
+                    print('egyeznek')
+                else:
+                    print('nem egyeznek')
 
         
         
