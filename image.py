@@ -96,8 +96,4 @@ def get_sign(picture, signs):
 # ideiglenes teszt kod
 # csak akkor hivodik meg ha ezt a filet futtatjuk
 if __name__ == '__main__':
-    imgs = cv2.imread('fire1.jpg')
-    test = cv2.imread('fire2.jpg')
-    r_test, r_imgs = resize_to_same_size(test, imgs)
-    print(match_percent(color_similarity(r_test, r_imgs)))
-    #print(ssim(r_test, r_imgs))
+    print('lmaooooooooooooooooooooooooooooOOOOOOOOoooooOOOOOOoooOOOooooOOOoo')
