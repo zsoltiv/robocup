@@ -3,6 +3,7 @@ import servo
 from approxeng.input.selectbinder import ControllerResource
 # kepfeldolgozas
 from skimage.measure import compare_ssim as ssim
+#from skimage.metrics import structural_similarity as ssim
 
 # custom modulok
 from camera import Camera
