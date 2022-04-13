@@ -16,14 +16,14 @@ class Camera:
         if display_:
             display(bgr.array)
         #sleep(1)
-        #hist = histogram(bgr.array)
-        cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
+        hist = histogram(bgr.array)
+        #cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
         if len(self.images) >= 2:
-            self.images = [cnt]
+            self.images = [hist]
         else:
-            self.images.append(cnt)
+            self.images.append(hist)
         name = 'img' + str(len(self.images)) + '.png'
-        imwrite(name, cnt)
+        #imwrite(name, cnt)
 
     def __init__(self):
         self.picamera = PiCamera()

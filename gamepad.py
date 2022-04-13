@@ -2,12 +2,12 @@ import dc
 import servo
 from approxeng.input.selectbinder import ControllerResource
 # kepfeldolgozas
-from skimage.measure import compare_ssim as ssim
-#from skimage.metrics import structural_similarity as ssim
+#from skimage.measure import compare_ssim as ssim
+from skimage.metrics import structural_similarity as ssim
 
 # custom modulok
 from camera import Camera
-from image import color_similarity
+from image import color_similarity, match_percent
 
 with ControllerResource() as joystick:
     print("Found a joystick and connected")
@@ -91,20 +91,20 @@ with ControllerResource() as joystick:
             
         #Camera            
         if joystick.presses.select:
-            camera.picture(display_=False)
-            print(len(camera.images))
+            camera.picture(display_=True)
             if len(camera.images) == 2:
-                match = ssim(camera.images[0], camera.images[1]) * 100
-                print(f'Ennyire hasonlóak a képek: {match}')
-                if match >= 90:
-                    print('egyeznek')
-                else:
-                    print('nem egyeznek')
-                #color_match = color_similarity(camera.images[0][1], camera.images[1][1])
-                #if color_match >= 90:
+                #match = ssim(camera.images[0], camera.images[1]) * 100
+                #print(f'Ennyire hasonlóak a képek: {match}')
+                #if match >= 90:
                 #    print('egyeznek')
                 #else:
                 #    print('nem egyeznek')
+                color_match = match_percent(color_similarity(camera.images[0], camera.images[1]))
+                print(f'ennyire egyeznek: {color_match}')
+                if color_match >= 90:
+                    print('egyeznek')
+                else:
+                    print('nem egyeznek')
 
         
         
