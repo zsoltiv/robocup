@@ -1,7 +1,8 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-from cv2 import cvtColor, COLOR_BGR2GRAY, imshow, waitKey
-from image import contours, histogram
+from cv2 import cvtColor, COLOR_BGR2GRAY, imwrite
+from image import contours, histogram, display
+from time import sleep
 
 
 class Camera:
@@ -9,22 +10,30 @@ class Camera:
     minimalis class a camera kore, mert csak (ettol nem lesz lassabb)
     """
 
+    def picture(self, display_=False):
+        bgr = PiRGBArray(self.picamera, size=self._resolution)
+        self.picamera.capture(bgr, 'bgr')
+        if display_:
+            display(bgr.array)
+        #sleep(1)
+        #hist = histogram(bgr.array)
+        cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
+        if len(self.images) >= 2:
+            self.images = [cnt]
+        else:
+            self.images.append(cnt)
+        name = 'img' + str(len(self.images)) + '.png'
+        imwrite(name, cnt)
+
     def __init__(self):
         self.picamera = PiCamera()
         self._resolution = (1024, 768)
         self.picamera.resolution = self._resolution
-        self.picamera.color_effects = (128, 128)
+        #self.picamera.color_effects = (128, 128)
         self.images = []
-
-    def picture(self):
-        bgr = PiRGBArray(self.picamera, size=self._resolution)
-        self.picamera.capture(bgr, 'bgr')
-        hist = histogram(bgr.array)
-        cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
-        if len(self.images) >= 2:
-            self.images = [(cnt, hist)]
-        else:
-            self.images.append((cnt, hist))
+        # takolt workaround, mert a legelso kep szar
+        self.picture()
+        self.images = []
 
 
 if __name__ == '__main__':

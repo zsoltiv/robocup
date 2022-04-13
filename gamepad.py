@@ -91,20 +91,20 @@ with ControllerResource() as joystick:
             
         #Camera            
         if joystick.presses.select:
-            camera.picture()
+            camera.picture(display_=False)
             print(len(camera.images))
             if len(camera.images) == 2:
-                match = ssim(camera.images[0][0], camera.images[1][0])
+                match = ssim(camera.images[0], camera.images[1]) * 100
                 print(f'Ennyire hasonlóak a képek: {match}')
                 if match >= 90:
                     print('egyeznek')
                 else:
                     print('nem egyeznek')
-                color_match = color_similarity(camera.images[0][1], camera.images[1][1])
-                if color_match >= 90:
-                    print('egyeznek')
-                else:
-                    print('nem egyeznek')
+                #color_match = color_similarity(camera.images[0][1], camera.images[1][1])
+                #if color_match >= 90:
+                #    print('egyeznek')
+                #else:
+                #    print('nem egyeznek')
 
         
         

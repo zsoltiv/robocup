@@ -27,19 +27,33 @@ def match_percent(match):
 
 
 def histogram(img):
-    hist = cv2.calcHist([img], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
-    return cv2.normalize(hist, None).flatten()
+    channels = cv2.split(img)
+    hists = []
+    for channel in channels:
+        hist = cv2.calcHist([channel], [0], None, [256], [0, 256])
+        hists.append(hist)
+    return [cv2.normalize(hist, None).flatten() for hist in hists]
 
 
 def color_similarity(img1, img2):
     # histogram magia
-    hist1 = cv2.calcHist([img1], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
-    hist2 = cv2.calcHist([img2], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
+    
+    hist1 = histogram(img1.copy())
+    hist2 = histogram(img2.copy())
+    #hist1 = cv2.calcHist([img1], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
+    #hist2 = cv2.calcHist([img2], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
     #hist1 = cv2.normalize(hist1, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F).flatten()
     #hist2 = cv2.normalize(hist2, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F).flatten()
-    hist1 = cv2.normalize(hist1, None).flatten()
-    hist2 = cv2.normalize(hist2, None).flatten()
-    return match_percent(cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA))
+    #hist1 = cv2.normalize(hist1, None).flatten()
+    #hist2 = cv2.normalize(hist2, None).flatten()
+    matches = []
+    for i in range(3):
+        matches.append(cv2.compareHist(hist1[i], hist2[i], cv2.HISTCMP_BHATTACHARYYA))
+    sum_ = 0
+    for match in matches:
+        sum_ += match
+
+    return sum_ / len(matches)
 
 
 def contours(gray):
