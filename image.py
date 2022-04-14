@@ -28,25 +28,27 @@ def match_percent(match):
 
 
 def histogram(img):
-    channels = cv2.split(img)
-    hists = []
-    for i in range(3):
-        hist = cv2.calcHist(channels, [i], None, [256], [0, 256])
-        hists.append(hist)
-    return [cv2.normalize(hist, None).flatten() for hist in hists]
+    #channels = cv2.split(img)
+    #hists = []
+    #for i in range(3):
+    #    hist = cv2.calcHist(channels, [i], None, [256], [0, 256])
+    #    hist = cv2.normalize(hist, None),flatten()
+    #    hists.append(hist)
+    #return hists
+    return cv2.calcHist([img], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
 
 
 def color_similarity(img1, img2):
     # histogram magia
     
-    matches = []
-    for i in range(3):
-        matches.append(cv2.compareHist(img1[i], img2[i], cv2.HISTCMP_BHATTACHARYYA))
-    matches = np.sort(np.array(matches))
-    print(matches)
-    median = np.median(matches)
-    print(median)
-    return median
+    #matches = []
+    #for i in range(3):
+    #    matches.append(cv2.compareHist(img1[i], img2[i], cv2.HISTCMP_BHATTACHARYYA))
+    #matches = np.sort(np.array(matches))
+    #print(matches)
+    #median = np.median(matches)
+    #print(median)
+    #return median
     #sum_ = 0
     #for match in matches:
     #    print(match)
@@ -54,6 +56,7 @@ def color_similarity(img1, img2):
 
     #return sum_ / len(matches)
     #return match_histograms(img1, img2, multichannel=True)
+    return cv2.compareHist(img1, img2, cv2.HISTCMP_BHATTACHARYYA)
 
 
 def contours(gray):
