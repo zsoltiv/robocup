@@ -4,6 +4,7 @@ from approxeng.input.selectbinder import ControllerResource
 # kepfeldolgozas
 #from skimage.measure import compare_ssim as ssim
 from skimage.metrics import structural_similarity as ssim
+from numpy import average as np_average
 
 # custom modulok
 from camera import Camera
@@ -93,13 +94,13 @@ with ControllerResource() as joystick:
         if joystick.presses.select:
             camera.picture(display_=True)
             if len(camera.images) == 2:
-                #match = ssim(camera.images[0], camera.images[1]) * 100
+                #match = ssim(camera.images[0][0], camera.images[1][0]) * 100
                 #print(f'Ennyire hasonlóak a képek: {match}')
                 #if match >= 90:
                 #    print('egyeznek')
                 #else:
                 #    print('nem egyeznek')
-                color_match = match_percent(color_similarity(camera.images[0], camera.images[1]))
+                color_match = np_average(color_distance(camera.images[0][1], camera.images[1][1]))
                 print(f'ennyire egyeznek: {color_match}')
                 if color_match >= 90:
                     print('egyeznek')

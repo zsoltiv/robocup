@@ -1,7 +1,7 @@
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 from cv2 import cvtColor, COLOR_BGR2GRAY, imwrite
-from image import contours, histogram, display
+from image import contours, avg_color, color_distance_percent, display
 from time import sleep
 
 
@@ -16,12 +16,12 @@ class Camera:
         if display_:
             display(bgr.array)
         #sleep(1)
-        hist = histogram(bgr.array)
-        #cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
+        avg = avg_color(bgr.array)
+        cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
         if len(self.images) >= 2:
-            self.images = [hist]
+            self.images = [(cnt, avg)]
         else:
-            self.images.append(hist)
+            self.images.append((cvt, avg))
         name = 'img' + str(len(self.images)) + '.png'
         #imwrite(name, cnt)
 
