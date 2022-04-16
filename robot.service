@@ -1,0 +1,13 @@
+[Unit]
+Description=Robocup menoseg
+After=multi-user.target
+
+[Service]
+User=pi
+Type=simple
+Restart=always
+WorkingDirectory=/home/pi/robocup
+ExecStart=/usr/bin/python3 ./gamepad.py
+
+[Install]
+WantedBy=multi-user.target
