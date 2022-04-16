@@ -18,8 +18,8 @@ with ControllerResource() as joystick:
     while joystick.connected:
         joystick.check_presses()
         
-        left_x, left_y = joystick['lx', 'ly']
-        right_x, right_y = joystick['rx', 'ry']
+        left_y = joystick['ly']
+        right_y = joystick['ry']
 
         if joystick.presses.start and not servo_imported:
             import servo
@@ -28,69 +28,68 @@ with ControllerResource() as joystick:
 
         if servo_imported:
             #Servo kar alapja:
-            if right_x < -0.75 and servo.alap > 0:
-                servo.alap = servo.alap - 0.05
-                servo.alap_rotation()
-                
-            if right_x > 0.75 and servo.alap < 180:
-                servo.alap = servo.alap + 0.05
-                servo.alap_rotation()
+            #if right_x < -0.75 and servo.alap > 0:
+            #    servo.alap = servo.alap - 0.05
+            #    servo.alap_rotation()
+            #    
+            #if right_x > 0.75 and servo.alap < 180:
+            #    servo.alap = servo.alap + 0.05
+            #    servo.alap_rotation()
 
 
             #Servo kar rész0:
-            if right_y < -0.75 and servo.resz0 > 0:
+            if left_y < -0.75 and servo.resz0 > 0:
                 servo.resz0 = servo.resz0 - 0.05
                 servo.resz0_rotation()
                 
-            if right_y > 0.75 and servo.resz0 < 180:
+            if left_y > 0.75 and servo.resz0 < 180:
                 servo.resz0 = servo.resz0 + 0.05
                 servo.resz0_rotation()
                 
-                
             #Servo kar rész1:
-            if left_y < -0.75 and servo.resz1 > 0:
+            if right_y < -0.75 and servo.resz1 > 0:
                 servo.resz1 = servo.resz1 - 0.05
                 servo.resz1_rotation()
                 
-            if left_y > 0.75 and servo.resz1 < 180:
+            if right_y > 0.75 and servo.resz1 < 180:
                 servo.resz1 = servo.resz1 + 0.05
                 servo.resz1_rotation()
                 
                 
             #Servo kar rész2:
-            if left_x < -0.75 and servo.resz2 > 0:
-                servo.resz2 = servo.resz2 - 0.05
-                servo.resz2_rotation()
-                
-            if left_x > 0.75 and servo.resz2 < 180:
-                servo.resz2 = servo.resz2 + 0.05
-                servo.resz2_rotation()
+            #if left_x < -0.75 and servo.resz2 > 0:
+            #    servo.resz2 = servo.resz2 - 0.05
+            #    servo.resz2_rotation()
+            #    
+            #if left_x > 0.75 and servo.resz2 < 180:
+            #    servo.resz2 = servo.resz2 + 0.05
+            #    servo.resz2_rotation()
 
 
-            #Servo kar csuklója:
+            #Servo kar manipulátora
             right_bumper = joystick['r1']
             left_bumper = joystick['l1']
             
-            if right_bumper is not None and servo.csuklo > 0:
-                servo.csuklo = servo.csuklo - 0.05
-                servo.csuklo_rotation()
+            if right_bumper is not None and servo.manipulator > 0:
+                servo.manipulator -= 0.05
+                servo.manipulator_rotation()
                 
-            if left_bumper is not None and servo.csuklo < 180:
-                servo.csuklo = servo.csuklo + 0.05
-                servo.csuklo_rotation()
+            if left_bumper is not None and servo.manipulator < 180:
+                servo.manipulator += 0.05
+                servo.manipulator_rotation()
             
             
-            #Servo kar manipulátora:
+            #Servo kar alapja
             right_trigger = joystick['r2']
             left_trigger = joystick['l2']
 
-            if right_trigger is not None and servo.manipulator > 0:
-                servo.manipulator = servo.manipulator - 0.05
-                servo.manipulator_rotation()
+            if right_trigger is not None and servo.alap > 0:
+                servo.alap -= 0.05
+                servo.alap_rotation()
 
-            if left_trigger is not None and servo.manipulator < 180:
-                servo.manipulator = servo.manipulator + 0.05
-                servo.manipulator_rotation()
+            if left_trigger is not None and servo.alap < 180:
+                servo.alap += 0.05
+                servo.alap_rotation()
             
             
         #Camera            
