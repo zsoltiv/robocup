@@ -17,11 +17,12 @@ class Camera:
             display(bgr.array)
         #sleep(1)
         avg = avg_color(bgr.array)
+        print(f'átlag szín {avg}')
         cnt = contours(cvtColor(bgr.array, COLOR_BGR2GRAY))
         if len(self.images) >= 2:
             self.images = [(cnt, avg)]
         else:
-            self.images.append((cvt, avg))
+            self.images.append((cnt, avg))
         name = 'img' + str(len(self.images)) + '.png'
         #imwrite(name, cnt)
 

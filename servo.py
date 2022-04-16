@@ -2,13 +2,8 @@ from adafruit_servokit import ServoKit
 from time import sleep
 
 kit = ServoKit(channels=16)
-
-kit.servo[0].set_pulse_width_range(550, 2500) #Manipulátor
-kit.servo[1].set_pulse_width_range(550, 2500) #Csukló
-kit.servo[2].set_pulse_width_range(550, 2500) #Rész 2
-kit.servo[3].set_pulse_width_range(550, 2500) #Rész 1
-kit.servo[4].set_pulse_width_range(550, 2500) #Rész 0
-kit.servo[5].set_pulse_width_range(550, 2500) #Alap
+for i in range(4):
+    kit.servo[i].set_pulse_width_range(550, 2500)  
 
 manipulator = 0
 csuklo = 0
@@ -24,13 +19,13 @@ def start_position():
     resz1 = 90
     resz0 = 90
     alap = 90
-    
+
+    kit.servo[0].angle = alap
     kit.servo[0].angle = manipulator
     kit.servo[1].angle = csuklo
     kit.servo[2].angle = resz2
     kit.servo[3].angle = resz1
     kit.servo[4].angle = resz0
-    kit.servo[5].angle = alap
 
 
 def manipulator_rotation():
@@ -56,3 +51,9 @@ def resz0_rotation():
 def alap_rotation():
     if 0 <= alap <= 180:
         kit.servo[5].angle = alap
+
+if __name__ == '__main__':
+    while True:
+        kit.servo[3].angle = 180
+        sleep(1)
+

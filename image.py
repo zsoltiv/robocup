@@ -88,8 +88,11 @@ def avg_color(img):
 
 def color_distance_percent(avg1, avg2):
     diff = np.absolute(np.subtract(avg1, avg2))
+    print(f'különbség: {diff}')
     hundreds = np.asarray([100, 100, 100])
     distance = np.absolute(np.subtract(avg1, diff))
+    print(f'távolság: {distance}')
+    print(f'avg1: {avg1}')
     return np.multiply(np.divide(distance, avg1), hundreds)
 
 
