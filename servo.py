@@ -31,15 +31,15 @@ def start_position():
 def manipulator_rotation():
     if 0 < manipulator < 180:
         kit.servo[3].angle = manipulator
-        
+
 #def csuklo_rotation():
 #    if 0 <= csuklo <= 180:
 #        kit.servo[1].angle = csuklo
-        
+
 #def resz2_rotation():
 #    if 0 <= resz2 <= 180:
 #        kit.servo[2].angle = resz2
-        
+
 def resz1_rotation():
     if 0 < resz1 < 180:
         kit.servo[2].angle = resz1
