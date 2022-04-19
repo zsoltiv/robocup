@@ -88,7 +88,7 @@ with ControllerResource() as joystick:
                 servo.manipulator -= 0.05
                 servo.manipulator_rotation()
 
-            if left_bumper is not None and servo.manipulator < 180:
+            if left_bumper is not None and servo.manipulator < 100:
                 servo.manipulator += 0.05
                 servo.manipulator_rotation()
 

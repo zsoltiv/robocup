@@ -29,7 +29,7 @@ def start_position():
 
 
 def manipulator_rotation():
-    if 0 < manipulator < 180:
+    if 0 < manipulator < 100:
         kit.servo[3].angle = manipulator
 
 #def csuklo_rotation():
